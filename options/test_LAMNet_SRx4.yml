@@ -1,0 +1,90 @@
+# general settings
+name: LAMNet_SRx4
+model_type: SRModel
+scale: 4
+num_gpu: 2
+manual_seed: 0
+
+# dataset and data loader settings
+datasets:
+  # --- validation
+  val_Set5:
+    name: Set5
+    type: PairedImageDataset
+    dataroot_gt: ../datasets/Benchmark/HR/Set5/x4
+    dataroot_lq: ../datasets/Benchmark/LR/LRBI/Set5/x4
+    filename_tmpl: '{}_LRBI_x4'
+    io_backend:
+      type: disk
+
+  val_Set14:
+    name: Set14
+    type: PairedImageDataset
+    dataroot_gt: ../datasets/Benchmark/HR/Set14/x4
+    dataroot_lq: ../datasets/Benchmark/LR/LRBI/Set14/x4
+    filename_tmpl: '{}_LRBI_x4'
+    io_backend:
+      type: disk
+
+  val_BSD100:
+    name: BSD100
+    type: PairedImageDataset
+    dataroot_gt: ../datasets/Benchmark/HR/B100/x4
+    dataroot_lq: ../datasets/Benchmark/LR/LRBI/B100/x4
+    filename_tmpl: '{}_LRBI_x4'
+    io_backend:
+      type: disk
+
+  val_Urban100:
+    name: Urban100
+    type: PairedImageDataset
+    dataroot_gt: ../datasets/Benchmark/HR/Urban100/x4
+    dataroot_lq: ../datasets/Benchmark/LR/LRBI/Urban100/x4
+    filename_tmpl: '{}_LRBI_x4'
+    io_backend:
+      type: disk
+
+  val_Manga109:
+    name: Manga109
+    type: PairedImageDataset
+    dataroot_gt: ../datasets/Benchmark/HR/Manga109/x4
+    dataroot_lq: ../datasets/Benchmark/LR/LRBI/Manga109/x4
+    filename_tmpl: '{}_LRBI_x4'
+    io_backend:
+      type: disk
+
+# network structures
+network_g:
+  type: LAMNet
+  in_chans: 3
+  num_blocks: 6
+  num_groups: 4
+  dim: 64
+  kernel_size: 13
+  kernel_loc: [4, 6, 7]
+  kernel_stride: [1, 2, 4]
+  num_head: 4
+  expansion_factor: 1
+  upscale: 4
+
+# path
+path:
+  pretrain_network_g: lamnet_x4.pth
+  param_key_g: params_ema
+  strict_load_g: true
+  resume_state: ~
+
+val:
+  save_img: true
+  suffix: ~
+
+  metrics:
+    psnr: # metric name, can be arbitrary
+      type: calculate_psnr
+      crop_border: 4
+      test_y_channel: true
+
+    ssim:
+      type: calculate_ssim
+      crop_border: 4
+      test_y_channel: true

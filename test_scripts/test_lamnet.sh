@@ -1,0 +1,3 @@
+CUDA_VISIBLE_DEVICES=2 python basicsr/test.py -opt options/LAMNet/test_SISR_ClassicDIV2K_Light_LAMNet_C64G4B6_GDFN_SRx2.yml
+CUDA_VISIBLE_DEVICES=2 python basicsr/test.py -opt options/LAMNet/test_SISR_ClassicDIV2K_Light_LAMNet_C64G4B6_GDFN_SRx3.yml
+CUDA_VISIBLE_DEVICES=2 python basicsr/test.py -opt options/LAMNet/test_SISR_ClassicDIV2K_Light_LAMNet_C64G4B6_GDFN_SRx4.yml

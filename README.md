@@ -1,7 +1,7 @@
 # Unifying Dimensions: A Linear Adaptive Mixer for Lightweight Image Super-Resolution
 This repository contains the official PyTorch Implementation of "Unifying Dimensions: A Linear Adaptive Mixer for Lightweight Image Super-Resolution"
 
-[\[Paper\]]() [\[Code\]](https://github.com/zononhzy/LAMNet) [\[Visual Results\]]() 
+[\[Paper\]]() [\[Code\]](https://github.com/zononhzy/LAMNet) [\[Visual Results\]](https://drive.google.com/drive/folders/1uHFHN3uUbJipecPnodccQlGPCJiElwGB?usp=sharing) [\[Pretrained Models\]](https://drive.google.com/drive/folders/1uHFHN3uUbJipecPnodccQlGPCJiElwGB?usp=sharing)
 
 ## Method Overview
 <!-- <p align="center"> <img width="1000" src="figs/simple_compare.png"> </p> -->
@@ -57,7 +57,7 @@ python basicsr/test.py -opt options/test_LAMNet_SRx4.yml
 
 ## Results
 <a id="result"></a>
-We provide the results on lightweight image SR. More results can be found in the [paper](). The visual results of LAMNet can be found in [\[Visual Results\]]().
+We provide the results on lightweight image SR. More results can be found in the [paper](). The visual results of LAMNet can be found in [\[Visual Results\]](https://drive.google.com/drive/folders/1uHFHN3uUbJipecPnodccQlGPCJiElwGB?usp=sharing).
 
 Visual Results
 

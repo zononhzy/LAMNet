@@ -1,0 +1,145 @@
+name: SISR_ClassicDIV2K_LAMNet_SRx2
+model_type: SRModel
+scale: 2
+num_gpu: 2
+manual_seed: 0
+
+# dataset and data loader settings
+datasets:
+  train:
+    name: DIV2K
+    type: PairedImageDataset
+    dataroot_gt: ../datasets/DIV2K/DIV2K_train_HR_sub
+    dataroot_lq: ../datasets/DIV2K/DIV2K_train_LR_bicubic/X2_sub
+    filename_tmpl: '{}'
+    meta_info_file: basicsr/data/meta_info/meta_info_DIV2K800sub_GT.txt
+    io_backend:
+      type: disk
+    gt_size: 128
+    use_hflip: true
+    use_rot: true
+
+    use_shuffle: true
+    num_worker_per_gpu: 32
+    batch_size_per_gpu: 32
+    dataset_enlarge_ratio: 100
+    prefetch_mode: ~
+
+  # --- validation
+  val_Set5:
+    name: Set5
+    type: PairedImageDataset
+    dataroot_gt: ../datasets/Benchmark/HR/Set5/x2
+    dataroot_lq: ../datasets/Benchmark/LR/LRBI/Set5/x2
+    filename_tmpl: '{}_LRBI_x2'
+    io_backend:
+      type: disk
+
+  val_Set14:
+    name: Set14
+    type: PairedImageDataset
+    dataroot_gt: ../datasets/Benchmark/HR/Set14/x2
+    dataroot_lq: ../datasets/Benchmark/LR/LRBI/Set14/x2
+    filename_tmpl: '{}_LRBI_x2'
+    io_backend:
+      type: disk
+
+  val_BSD100:
+    name: BSD100
+    type: PairedImageDataset
+    dataroot_gt: ../datasets/Benchmark/HR/B100/x2
+    dataroot_lq: ../datasets/Benchmark/LR/LRBI/B100/x2
+    filename_tmpl: '{}_LRBI_x2'
+    io_backend:
+      type: disk
+
+  val_Urban100:
+    name: Urban100
+    type: PairedImageDataset
+    dataroot_gt: ../datasets/Benchmark/HR/Urban100/x2
+    dataroot_lq: ../datasets/Benchmark/LR/LRBI/Urban100/x2
+    filename_tmpl: '{}_LRBI_x2'
+    io_backend:
+      type: disk
+
+  val_Manga109:
+    name: Manga109
+    type: PairedImageDataset
+    dataroot_gt: ../datasets/Benchmark/HR/Manga109/x2
+    dataroot_lq: ../datasets/Benchmark/LR/LRBI/Manga109/x2
+    filename_tmpl: '{}_LRBI_x2'
+    io_backend:
+      type: disk
+
+# network structures
+network_g:
+  type: LAMNet
+  in_chans: 3
+  num_blocks: 6
+  num_groups: 5
+  dim: 64
+  kernel_size: 13
+  kernel_loc: [4, 6, 7]
+  kernel_stride: [1, 2, 4]
+  num_head: 4
+  expansion_factor: 1
+  upscale: 2
+
+# path
+path:
+  pretrain_network_g: ~
+  param_key_g: params_ema
+  strict_load_g: true
+  resume_state: ~
+
+# training settings
+train:
+  ema_decay: 0.999
+  optim_g:
+    type: Adam
+    lr: !!float 1e-3
+    weight_decay: 0
+    betas: [0.9, 0.99]
+
+  scheduler:
+    type: MultiStepLR
+    milestones: [250000, 400000, 450000, 475000]
+    gamma: 0.5
+
+  total_iter: 500000
+  warmup_iter: -1  # no warm up
+
+  # losses
+  pixel_opt:
+    type: L1Loss
+    loss_weight: 1.0
+    reduction: mean
+
+# validation settings
+val:
+  val_freq: !!float 1e4
+  save_img: false
+
+  metrics:
+    psnr: # metric name, can be arbitrary
+      type: calculate_psnr
+      crop_border: 4
+      test_y_channel: true
+
+    ssim:
+      type: calculate_ssim
+      crop_border: 4
+      test_y_channel: true
+
+# logging settings
+logger:
+  print_freq: 500
+  save_checkpoint_freq: !!float 5e3
+  use_tb_logger: true
+  wandb:
+    project: ~
+    resume_id: ~
+
+dist_params:
+  backend: nccl
+  port: 29500

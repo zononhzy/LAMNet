@@ -1,5 +1,5 @@
 # Unifying Dimensions: A Linear Adaptive Mixer for Lightweight Image Super-Resolution
-This repository contains the official PyTorch Implementation of "Unifying Dimensions: A Linear Adaptive Mixer for Lightweight Image Super-Resolution"
+This repository contains the official PyTorch Implementation of "Unifying Dimensions: A Linear Adaptive Mixer for Lightweight Image Super-Resolution", accepted by IEEE TIP.
 
 [\[Paper\]]() [\[Code\]](https://github.com/zononhzy/LAMNet) [\[Visual Results\]](https://drive.google.com/drive/folders/1uHFHN3uUbJipecPnodccQlGPCJiElwGB?usp=sharing) [\[Pretrained Models\]](https://drive.google.com/drive/folders/1uHFHN3uUbJipecPnodccQlGPCJiElwGB?usp=sharing)
 
